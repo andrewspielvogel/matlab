@@ -7,8 +7,10 @@ function out = read_kvh(file)
 % andrewspielvogel@gmail.com
 %
 
-
+file
 csv_input = csvread(file,0,1);
+csv_input(1,:)
+size(csv_input)
 out.ang = csv_input(:,1:3)';
 out.acc = csv_input(:,4:6)';
 out.mag = csv_input(:,7:9)';
