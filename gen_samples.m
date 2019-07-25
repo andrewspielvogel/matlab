@@ -25,17 +25,17 @@ a_e = [cos(lat);0;sin(lat)] - (15.04*pi/180/3600)^2*cos(lat)*[r;0;0]/9.81;
 a_n = Ren'*a_e;
 
 m_n = [0.205796;-0.040654;0.468785];
-%m_n = [1;0;0];
+m_n = [1;0;0];
 
 w_E_e = [0;0;1]*15.04*pi/180/3600;
 w_E_n = Ren'*w_E_e;
 
-fileID = fopen('/home/spiels/log/sim/kvh/sim5.KVH','w');
-fileMST = fopen('/home/spiels/log/sim/microstrain/sim5.MST','w');
-filePhins = fopen('/home/spiels/log/sim/phins/sim5.INS','w');
+fileID = fopen('/home/spiels/log/sim/kvh/sim6.KVH','w');
+fileMST = fopen('/home/spiels/log/sim/microstrain/sim6.MST','w');
+filePhins = fopen('/home/spiels/log/sim/phins/sim6.INS','w');
 
 T=[.95,0,0;0,1.1,0;0,0,1.05]; %ijrr
-%T=[.7,0,0;0,1.3,0;0,0,1];
+%T=[.7,0,0;0,1.3,0;0,0,1.1];
 
 %T=eye(3);
 
@@ -50,8 +50,8 @@ for i=1:num
         Rni{i + 1} = Rni{i}*expm(skew(w_veh)*dt);
     end
 
-    ang(:,i) = w_veh + Rni{i}'*w_E_n + bias.ang + w_sig*randn(3,1);
-    acc(:,i) = Rni{i}'*a_n + bias.acc + a_sig*randn(3,1);%+skew(w_veh)*[0.1;0;0];
+    ang(:,i) = w_veh + Rni{i}'*w_E_n + bias.ang + normrnd(0,w_sig,[3,1]);
+    acc(:,i) = Rni{i}'*a_n + bias.acc + normrnd(0,a_sig,[3,1]);%+skew(w_veh)*[0.1;0;0];
     samp.acc_nv(:,i) = acc(:,i);
     samp.E(:,i) = Rni{i}'*[0;1;0]*norm(skew(w_E_n)*a_n);
     samp.D(:,i) = Rni{i}'*a_n;
@@ -59,7 +59,7 @@ for i=1:num
     samp.w_E(:,i) = Rni{i}'*w_E_n;
     samp.w_E_n(:,i) = Rni{i}'*[w_E_n(1);0;0];
     %T=eye(3);
-    samp.mag(:,i) = T*Rni{i}'*m_n + m_sig*randn(3,1) + bias.mag;
+    samp.mag(:,i) = T*Rni{i}'*m_n + normrnd(0,m_sig,[3,1]) + bias.mag;
     samp.mag_true(:,i) = Rni{i}'*m_n;
     %samp.mag(:,i) = Rni{i}'*m_n + m_sig*randn(3,1) + bias.mag;
     
@@ -106,9 +106,9 @@ w = [0;0;cos(t/60)/10]; % (1000hz) sim2
 %w = [cos(t/5)/50;sin(t/10)/40;cos(t/60)/10]; % (1000hz) sim3
 %w = [sin(t/50)/8+cos(t/10)/5;sin(t/10)/40+cos(t/30)/20;cos(t/60)/10]; % (1000hz) sim3
 
-%w = [sin(t/20)/20+cos(t/10)/15;sin(t/10)/40+cos(t/30)/25;cos(t/60)/10]; % (1000hz) sim4 (sim3 in IJRR paper)
+w = [sin(t/20)/20+cos(t/10)/15;sin(t/10)/40+cos(t/30)/25;cos(t/60)/10]; % (1000hz) sim4 (sim3 in IJRR paper)
 
-w = [0;0;cos(t/60)/10]; % (10hz) sim5
+w = [sin(t/20)/100;cos(t/15)/50;cos(t/5)/2]; % (10hz) sim5
 
 
 if t>2500

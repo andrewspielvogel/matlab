@@ -7,19 +7,51 @@ function out = read_kvh(file)
 % andrewspielvogel@gmail.com
 %
 
-file
-csv_input = csvread(file,0,1);
-csv_input(1,:)
-size(csv_input)
-out.ang = csv_input(:,1:3)';
-out.acc = csv_input(:,4:6)';
-out.mag = csv_input(:,7:9)';
-out.temp = csv_input(:,10)';
-out.seq_num = csv_input(:,11)';
-out.stamp = csv_input(:,12)';
-out.status = csv_input(:,14:19)';
-out.t = out.stamp-out.stamp(1);
-out.hz = round(1/(((out.stamp(end)-out.stamp(1)))/size(out.stamp,2)));
-out.att = csv_input(:,20:22);
-%out.bias.ang = csv_input(:,22:24);
-%out.acc_est = csv_input(:,25:27);
+
+[   out.string,...
+    out.date(:,1),...
+    out.date(:,2),...
+    out.date(:,3),...
+    out.time(:,1),...
+    out.time(:,2),...
+    out.time(:,3),...
+    out.rov_time,...
+    out.ros_time,...
+    out.ang(:,1),...  % rad/s
+    out.ang(:,2),...  % rad/s
+    out.ang(:,3),...  % rad/s
+    out.acc(:,1),...  % m/s^2
+    out.acc(:,2),...  % m/s^2
+    out.acc(:,3),...  % m/s^2
+    out.mag(:,1),...  % Gauss
+    out.mag(:,2),...  % Gauss
+    out.mag(:,3),...  % Gauss
+    out.temp,...
+    out.seq_num,...
+    out.t,...
+    out.stamp,...
+    out.status(:,1),...
+    out.status(:,2),...
+    out.status(:,3),...
+    out.status(:,4),...
+    out.status(:,5),...
+    out.status(:,6)] = textread(file,'%3s %d/%d/%d %d:%d:%f %f %f %f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,%f,%f,%d,%d,%d,%d,%d,%d');
+
+
+% file
+% csv_input = csvread(file,0,1);
+% format long
+% csv_input(1,:)
+% size(csv_input)
+% out.ang = csv_input(:,1:3)';
+% out.acc = csv_input(:,4:6)';
+% out.mag = csv_input(:,7:9)';
+% out.temp = csv_input(:,10)';
+% out.seq_num = csv_input(:,11)';
+% out.stamp = csv_input(:,12)';
+% out.status = csv_input(:,14:19)';
+% out.t = out.stamp-out.stamp(1);
+% out.hz = round(1/(((out.stamp(end)-out.stamp(1)))/size(out.stamp,2)));
+% out.att = csv_input(:,20:22);
+% %out.bias.ang = csv_input(:,22:24);
+% %out.acc_est = csv_input(:,25:27);
