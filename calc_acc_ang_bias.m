@@ -1,14 +1,15 @@
-function out = calc_acc_ang_bias(samp,theta0)
+function out = calc_acc_ang_bias(samp,wb,ab)
 
 
 % gains for adaptive observer
 K.ka = 1;
-K.K_bw = eye(3)/100;
+K.K_bw = eye(3)/1000;
 K.K_ba = eye(3);
 
 %K.K_bw(3,3) = 0;
 %K.K_ba(3,3) = 0;
 
+theta0 = [samp.acc(1,:)';wb;ab];
 % run ode45
 tic
 %[t,theta] = ode45(@(t,theta) calc_thetadot(t,theta,samp,K),samp.t,theta0);

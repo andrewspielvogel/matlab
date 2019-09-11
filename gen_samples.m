@@ -13,7 +13,7 @@ ang = zeros(3,num);
 acc = zeros(3,num);
 samp.E = zeros(3,num);
 
-
+%%%% Turned Noise off
 w_sig = 6.32 * 10^(-3)*pi/180;  % measured 1775, units are rad/sec
 a_sig = 0.0037;            % measured 1775, units are g, not m/s^2
 m_sig = 0.002; % units are gauss
@@ -25,17 +25,17 @@ a_e = [cos(lat);0;sin(lat)] - (15.04*pi/180/3600)^2*cos(lat)*[r;0;0]/9.81;
 a_n = Ren'*a_e;
 
 m_n = [0.205796;-0.040654;0.468785];
-m_n = [1;0;0];
+%m_n = [1;0;0];
 
 w_E_e = [0;0;1]*15.04*pi/180/3600;
 w_E_n = Ren'*w_E_e;
 
-fileID = fopen('/home/spiels/log/sim/kvh/sim6.KVH','w');
-fileMST = fopen('/home/spiels/log/sim/microstrain/sim6.MST','w');
-filePhins = fopen('/home/spiels/log/sim/phins/sim6.INS','w');
+fileID = fopen('/home/spiels/log/RAL2020/sim/sim1.KVH','w');
+fileMST = fopen('/home/spiels/log/RAL2020/sim/sim1.MST','w');
+filePhins = fopen('/home/spiels/log/RAL2020/sim/sim1.INS','w');
 
 T=[.95,0,0;0,1.1,0;0,0,1.05]; %ijrr
-%T=[.7,0,0;0,1.3,0;0,0,1.1];
+T=[1.1,0.2,0;0.2,0.95,0;0,0,1];
 
 %T=eye(3);
 
@@ -108,7 +108,9 @@ w = [0;0;cos(t/60)/10]; % (1000hz) sim2
 
 w = [sin(t/20)/20+cos(t/10)/15;sin(t/10)/40+cos(t/30)/25;cos(t/60)/10]; % (1000hz) sim4 (sim3 in IJRR paper)
 
-w = [sin(t/20)/100;cos(t/15)/50;cos(t/5)/2]; % (10hz) sim5
+w = [0;cos(t/15)/10;cos(t/5)/2]; % (10hz) sim5
+w = [0;sin(t/5)/15+cos(t/2)/25*0;cos(t/7)/2+sin(t)/20*0]; % (10hz) sim5
+w = [0;0;cos(t/5)+sin(t)/10]; % (10hz) RAL2020/sim1
 
 
 if t>2500
