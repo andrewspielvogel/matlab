@@ -1,4 +1,4 @@
-function out = calc_mag_bias(samp,phins,theta0,k)
+function out = calc_mag_bias(samp,theta0,k)
 
 
 K.K = diag(k);
@@ -41,7 +41,7 @@ out.mag = real(out.T\(samp.mag' - out.b(:,end)));
 out.acc = samp.acc';
 out.ang = samp.ang';
 
-rms = calc_heading(out.t,out,phins);
+%rms = calc_heading(out.t,out,phins);
 %out = rms;
 
 

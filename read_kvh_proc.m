@@ -1,6 +1,11 @@
-function out = read_kvh_proc(input,phins)
+function out = read_kvh_proc(dir,file,run_number)
 
-csv = csvread(input,1,1);
+kvh_file = [dir 'proc/kvh/processed/' file '_' run_number '.csv'];
+phins_file = [dir 'phins/' file '.INS'];
+
+csv = csvread(kvh_file,1,1);
+
+phins = read_phins_imbat(phins_file);
 
 out.t = csv(:,7);
 out.att = csv(:,8:10);

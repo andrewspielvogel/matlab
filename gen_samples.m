@@ -14,9 +14,10 @@ acc = zeros(3,num);
 samp.E = zeros(3,num);
 
 %%%% Turned Noise off
+w_sig = 0*0.00024;%6.32 * 10^(-3)*pi/180;  % measured 1775, units are rad/sec
 w_sig = 6.32 * 10^(-3)*pi/180;  % measured 1775, units are rad/sec
 a_sig = 0.0037;            % measured 1775, units are g, not m/s^2
-m_sig = 0.002; % units are gauss
+m_sig = 0*0.002; % units are gauss
 
 % generate a_n
 r = 6371*1000;
@@ -30,14 +31,13 @@ m_n = [0.205796;-0.040654;0.468785];
 w_E_e = [0;0;1]*15.04*pi/180/3600;
 w_E_n = Ren'*w_E_e;
 
-fileID = fopen('/home/spiels/log/RAL2020/sim/sim1.KVH','w');
-fileMST = fopen('/home/spiels/log/RAL2020/sim/sim1.MST','w');
-filePhins = fopen('/home/spiels/log/RAL2020/sim/sim1.INS','w');
+fileID = fopen('/home/spiels/log/JFR2019/sim/sim3.KVH','w');
+fileMST = fopen('/home/spiels/log/JFR2019/sim/sim3.MST','w');
+filePhins = fopen('/home/spiels/log/JFR2019/sim/sim3.INS','w');
 
 T=[.95,0,0;0,1.1,0;0,0,1.05]; %ijrr
-T=[1.1,0.2,0;0.2,0.95,0;0,0,1];
-
-%T=eye(3);
+T=[1.1,0.1,0.03;0.1,0.95,0.01;0.03,0.01,1.2];
+T=eye(3)+0*diag([0.6;-0.4;0.3]);
 
 for i=1:num
 
@@ -106,11 +106,13 @@ w = [0;0;cos(t/60)/10]; % (1000hz) sim2
 %w = [cos(t/5)/50;sin(t/10)/40;cos(t/60)/10]; % (1000hz) sim3
 %w = [sin(t/50)/8+cos(t/10)/5;sin(t/10)/40+cos(t/30)/20;cos(t/60)/10]; % (1000hz) sim3
 
-w = [sin(t/20)/20+cos(t/10)/15;sin(t/10)/40+cos(t/30)/25;cos(t/60)/10]; % (1000hz) sim4 (sim3 in IJRR paper)
 
-w = [0;cos(t/15)/10;cos(t/5)/2]; % (10hz) sim5
-w = [0;sin(t/5)/15+cos(t/2)/25*0;cos(t/7)/2+sin(t)/20*0]; % (10hz) sim5
+%w = [0;cos(t/15)/10;cos(t/5)/2]; % (10hz) sim5
 w = [0;0;cos(t/5)+sin(t)/10]; % (10hz) RAL2020/sim1
+
+%w = [0;sin(t/2)/8;cos(t/17)/3]; % (10hz) sim2
+%w = [sin(t/20)/20+cos(t/10)/15;sin(t/10)/40+cos(t/30)/25;cos(t/60)/10]; % sim1
+w = [0;sin(t/10)/8;cos(t/17)/3]; % (10hz) sim2
 
 
 if t>2500
